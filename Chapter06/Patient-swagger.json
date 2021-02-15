@@ -1,0 +1,3179 @@
+
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Patient API",
+        "description": "A simplified version of the HL7 FHIR API for Patient resources.",
+        "version": "4.0.1"
+    },
+    "basePath": "/fhir-server/api/v4",
+    "x-ibm-configuration": {
+        "gateway": "datapower-api-gateway",
+        "type": "rest",
+        "phase": "realized",
+        "enforced": true,
+        "testable": true,
+        "cors": {
+            "enabled": true
+        },
+        "assembly": {
+            "execute": [
+                {
+                    "invoke": {
+                        "version": "2.0.0",
+                        "title": "invoke",
+                        "header-control": {
+                            "type": "blacklist",
+                            "values": [
+                            ]
+                        },
+                        "parameter-control": {
+                            "type": "whitelist",
+                            "values": [
+                            ]
+                        },
+                        "timeout": 60,
+                        "verb": "keep",
+                        "cache-response": "protocol",
+                        "cache-ttl": 900,
+                        "stop-on-error": [
+                        ],
+                        "target-url": "$(target-url)$(api.operation.path)$(request.search)"
+                    }
+                }
+            ],
+            "catch": [
+            ]
+        },
+        "properties": {
+            "target-url": {
+                "value": "https://localhost/fhir-server/api/v4/",
+                "description": "The URL of the target service",
+                "encoded": false
+            }
+        },
+        "activity-log": {
+            "enabled": true,
+            "error-content": "header",
+            "success-content": "activity"
+        },
+        "application-authentication": {
+            "certificate": false
+        },
+        "catalogs": {
+        }
+    },
+    "tags": [
+        {
+            "name": "Patient"
+        }
+    ],
+    "paths": {
+        "/Patient": {
+            "post": {
+                "tags": [
+                    "Patient"
+                ],
+                "summary": "Create a Patient resource",
+                "operationId": "createPatient",
+                "consumes": [
+                    "application/fhir+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Patient"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Create Patient operation successful"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Patient"
+                ],
+                "summary": "Search for Patient resources",
+                "operationId": "searchPatient",
+                "produces": [
+                    "application/fhir+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "given",
+                        "description": "Multiple Resources: \r\n\r\n* [Patient](patient.html): A portion of the given name of the patient\r\n* [Practitioner](practitioner.html): A portion of the given name\r\n",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "identifier",
+                        "description": "A patient identifier",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "birthdate",
+                        "description": "Multiple Resources: \r\n\r\n* [Patient](patient.html): The patient's date of birth\r\n* [Person](person.html): The person's date of birth\r\n* [RelatedPerson](relatedperson.html): The Related Person's date of birth\r\n",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "address",
+                        "description": "Multiple Resources: \r\n\r\n* [Patient](patient.html): A server defined search that may match any of the string fields in the Address, including line, city, district, state, country, postalCode, and/or text\r\n* [Person](person.html): A server defined search that may match any of the string fields in the Address, including line, city, district, state, country, postalCode, and/or text\r\n* [Practitioner](practitioner.html): A server defined search that may match any of the string fields in the Address, including line, city, district, state, country, postalCode, and/or text\r\n* [RelatedPerson](relatedperson.html): A server defined search that may match any of the string fields in the Address, including line, city, district, state, country, postalCode, and/or text\r\n",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "deceased",
+                        "description": "This patient has been marked as deceased, or as a death date entered",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "address-state",
+                        "description": "Multiple Resources: \r\n\r\n* [Patient](patient.html): A state specified in an address\r\n* [Person](person.html): A state specified in an address\r\n* [Practitioner](practitioner.html): A state specified in an address\r\n* [RelatedPerson](relatedperson.html): A state specified in an address\r\n",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "gender",
+                        "description": "Multiple Resources: \r\n\r\n* [Patient](patient.html): Gender of the patient\r\n* [Person](person.html): The gender of the person\r\n* [Practitioner](practitioner.html): Gender of the practitioner\r\n* [RelatedPerson](relatedperson.html): Gender of the related person\r\n",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "general-practitioner",
+                        "description": "Patient's nominated general practitioner, not the organization that manages the record",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "link",
+                        "description": "All patients linked to the given patient",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "active",
+                        "description": "Whether the patient record is active",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "language",
+                        "description": "Language code (irrespective of use value)",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "address-postalcode",
+                        "description": "Multiple Resources: \r\n\r\n* [Patient](patient.html): A postalCode specified in an address\r\n* [Person](person.html): A postal code specified in an address\r\n* [Practitioner](practitioner.html): A postalCode specified in an address\r\n* [RelatedPerson](relatedperson.html): A postal code specified in an address\r\n",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "address-country",
+                        "description": "Multiple Resources: \r\n\r\n* [Patient](patient.html): A country specified in an address\r\n* [Person](person.html): A country specified in an address\r\n* [Practitioner](practitioner.html): A country specified in an address\r\n* [RelatedPerson](relatedperson.html): A country specified in an address\r\n",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "death-date",
+                        "description": "The date of death has been provided and satisfies this search value",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "phonetic",
+                        "description": "Multiple Resources: \r\n\r\n* [Patient](patient.html): A portion of either family or given name using some kind of phonetic matching algorithm\r\n* [Person](person.html): A portion of name using some kind of phonetic matching algorithm\r\n* [Practitioner](practitioner.html): A portion of either family or given name using some kind of phonetic matching algorithm\r\n* [RelatedPerson](relatedperson.html): A portion of name using some kind of phonetic matching algorithm\r\n",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "phone",
+                        "description": "Multiple Resources: \r\n\r\n* [Patient](patient.html): A value in a phone contact\r\n* [Person](person.html): A value in a phone contact\r\n* [Practitioner](practitioner.html): A value in a phone contact\r\n* [PractitionerRole](practitionerrole.html): A value in a phone contact\r\n* [RelatedPerson](relatedperson.html): A value in a phone contact\r\n",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "organization",
+                        "description": "The organization that is the custodian of the patient record",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "name",
+                        "description": "A server defined search that may match any of the string fields in the HumanName, including family, give, prefix, suffix, suffix, and/or text",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "address-use",
+                        "description": "Multiple Resources: \r\n\r\n* [Patient](patient.html): A use code specified in an address\r\n* [Person](person.html): A use code specified in an address\r\n* [Practitioner](practitioner.html): A use code specified in an address\r\n* [RelatedPerson](relatedperson.html): A use code specified in an address\r\n",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "telecom",
+                        "description": "Multiple Resources: \r\n\r\n* [Patient](patient.html): The value in any kind of telecom details of the patient\r\n* [Person](person.html): The value in any kind of contact\r\n* [Practitioner](practitioner.html): The value in any kind of contact\r\n* [PractitionerRole](practitionerrole.html): The value in any kind of contact\r\n* [RelatedPerson](relatedperson.html): The value in any kind of contact\r\n",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "address-city",
+                        "description": "Multiple Resources: \r\n\r\n* [Patient](patient.html): A city specified in an address\r\n* [Person](person.html): A city specified in an address\r\n* [Practitioner](practitioner.html): A city specified in an address\r\n* [RelatedPerson](relatedperson.html): A city specified in an address\r\n",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "family",
+                        "description": "Multiple Resources: \r\n\r\n* [Patient](patient.html): A portion of the family name of the patient\r\n* [Practitioner](practitioner.html): A portion of the family name\r\n",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "email",
+                        "description": "Multiple Resources: \r\n\r\n* [Patient](patient.html): A value in an email contact\r\n* [Person](person.html): A value in an email contact\r\n* [Practitioner](practitioner.html): A value in an email contact\r\n* [PractitionerRole](practitionerrole.html): A value in an email contact\r\n* [RelatedPerson](relatedperson.html): A value in an email contact\r\n",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "$ref": "#/parameters/_profileParam"
+                    },
+                    {
+                        "$ref": "#/parameters/_lastUpdatedParam"
+                    },
+                    {
+                        "$ref": "#/parameters/_tagParam"
+                    },
+                    {
+                        "$ref": "#/parameters/_securityParam"
+                    },
+                    {
+                        "$ref": "#/parameters/_sourceParam"
+                    },
+                    {
+                        "$ref": "#/parameters/_idParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Search Patient operation successful",
+                        "schema": {
+                            "$ref": "#/definitions/Bundle"
+                        }
+                    }
+                }
+            }
+        },
+        "/Patient/{id}/_history/{vid}": {
+            "get": {
+                "tags": [
+                    "Patient"
+                ],
+                "summary": "Read specific version of a Patient resource",
+                "operationId": "vreadPatient",
+                "produces": [
+                    "application/fhir+json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/idParam"
+                    },
+                    {
+                        "$ref": "#/parameters/vidParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Versioned read Patient operation successful",
+                        "schema": {
+                            "$ref": "#/definitions/Patient"
+                        }
+                    }
+                }
+            }
+        },
+        "/Patient/{id}": {
+            "get": {
+                "tags": [
+                    "Patient"
+                ],
+                "summary": "Read a Patient resource",
+                "operationId": "readPatient",
+                "produces": [
+                    "application/fhir+json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/idParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Read Patient operation successful",
+                        "schema": {
+                            "$ref": "#/definitions/Patient"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Patient"
+                ],
+                "summary": "Update an existing Patient resource",
+                "operationId": "updatePatient",
+                "consumes": [
+                    "application/fhir+json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/idParam"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Patient"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update Patient operation successful"
+                    },
+                    "201": {
+                        "description": "Create Patient operation successful (requires 'updateCreateEnabled' configuration option)"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Patient"
+                ],
+                "summary": "Delete a Patient resource",
+                "operationId": "deletePatient",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/idParam"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Delete Patient operation successful"
+                    }
+                }
+            }
+        },
+        "/Patient/{id}/_history": {
+            "get": {
+                "tags": [
+                    "Patient"
+                ],
+                "summary": "Return the history of a Patient resource",
+                "operationId": "historyPatient",
+                "produces": [
+                    "application/fhir+json"
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/idParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "History Patient operation successful",
+                        "schema": {
+                            "$ref": "#/definitions/Bundle"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "parameters": {
+        "idParam": {
+            "name": "id",
+            "description": "logical identifier",
+            "in": "path",
+            "required": true,
+            "type": "string"
+        },
+        "vidParam": {
+            "name": "vid",
+            "description": "version identifier",
+            "in": "path",
+            "required": true,
+            "type": "string"
+        },
+        "_profileParam": {
+            "name": "_profile",
+            "description": "Profiles this resource claims to conform to",
+            "in": "query",
+            "required": false,
+            "type": "string"
+        },
+        "_lastUpdatedParam": {
+            "name": "_lastUpdated",
+            "description": "When the resource version last changed",
+            "in": "query",
+            "required": false,
+            "type": "string"
+        },
+        "_tagParam": {
+            "name": "_tag",
+            "description": "Tags applied to this resource",
+            "in": "query",
+            "required": false,
+            "type": "string"
+        },
+        "_securityParam": {
+            "name": "_security",
+            "description": "Security Labels applied to this resource",
+            "in": "query",
+            "required": false,
+            "type": "string"
+        },
+        "_sourceParam": {
+            "name": "_source",
+            "description": "Identifies where the resource comes from",
+            "in": "query",
+            "required": false,
+            "type": "string"
+        },
+        "_idParam": {
+            "name": "_id",
+            "description": "Logical id of this artifact",
+            "in": "query",
+            "required": false,
+            "type": "string"
+        }
+    },
+    "definitions": {
+        "Resource": {
+            "type": "object",
+            "discriminator": "resourceType",
+            "properties": {
+                "resourceType": {
+                    "type": "string",
+                    "enum": [
+                        "Account",
+                        "ActivityDefinition",
+                        "AdverseEvent",
+                        "AllergyIntolerance",
+                        "Appointment",
+                        "AppointmentResponse",
+                        "AuditEvent",
+                        "Basic",
+                        "Binary",
+                        "BiologicallyDerivedProduct",
+                        "BodyStructure",
+                        "Bundle",
+                        "CapabilityStatement",
+                        "CarePlan",
+                        "CareTeam",
+                        "CatalogEntry",
+                        "ChargeItem",
+                        "ChargeItemDefinition",
+                        "Claim",
+                        "ClaimResponse",
+                        "ClinicalImpression",
+                        "CodeSystem",
+                        "Communication",
+                        "CommunicationRequest",
+                        "CompartmentDefinition",
+                        "Composition",
+                        "ConceptMap",
+                        "Condition",
+                        "Consent",
+                        "Contract",
+                        "Coverage",
+                        "CoverageEligibilityRequest",
+                        "CoverageEligibilityResponse",
+                        "DetectedIssue",
+                        "Device",
+                        "DeviceDefinition",
+                        "DeviceMetric",
+                        "DeviceRequest",
+                        "DeviceUseStatement",
+                        "DiagnosticReport",
+                        "DocumentManifest",
+                        "DocumentReference",
+                        "DomainResource",
+                        "EffectEvidenceSynthesis",
+                        "Encounter",
+                        "Endpoint",
+                        "EnrollmentRequest",
+                        "EnrollmentResponse",
+                        "EpisodeOfCare",
+                        "EventDefinition",
+                        "Evidence",
+                        "EvidenceVariable",
+                        "ExampleScenario",
+                        "ExplanationOfBenefit",
+                        "FamilyMemberHistory",
+                        "Flag",
+                        "Goal",
+                        "GraphDefinition",
+                        "Group",
+                        "GuidanceResponse",
+                        "HealthcareService",
+                        "ImagingStudy",
+                        "Immunization",
+                        "ImmunizationEvaluation",
+                        "ImmunizationRecommendation",
+                        "ImplementationGuide",
+                        "InsurancePlan",
+                        "Invoice",
+                        "Library",
+                        "Linkage",
+                        "List",
+                        "Location",
+                        "Measure",
+                        "MeasureReport",
+                        "Media",
+                        "Medication",
+                        "MedicationAdministration",
+                        "MedicationDispense",
+                        "MedicationKnowledge",
+                        "MedicationRequest",
+                        "MedicationStatement",
+                        "MedicinalProduct",
+                        "MedicinalProductAuthorization",
+                        "MedicinalProductContraindication",
+                        "MedicinalProductIndication",
+                        "MedicinalProductIngredient",
+                        "MedicinalProductInteraction",
+                        "MedicinalProductManufactured",
+                        "MedicinalProductPackaged",
+                        "MedicinalProductPharmaceutical",
+                        "MedicinalProductUndesirableEffect",
+                        "MessageDefinition",
+                        "MessageHeader",
+                        "MolecularSequence",
+                        "NamingSystem",
+                        "NutritionOrder",
+                        "Observation",
+                        "ObservationDefinition",
+                        "OperationDefinition",
+                        "OperationOutcome",
+                        "Organization",
+                        "OrganizationAffiliation",
+                        "Parameters",
+                        "Patient",
+                        "PaymentNotice",
+                        "PaymentReconciliation",
+                        "Person",
+                        "PlanDefinition",
+                        "Practitioner",
+                        "PractitionerRole",
+                        "Procedure",
+                        "Provenance",
+                        "Questionnaire",
+                        "QuestionnaireResponse",
+                        "RelatedPerson",
+                        "RequestGroup",
+                        "ResearchDefinition",
+                        "ResearchElementDefinition",
+                        "ResearchStudy",
+                        "ResearchSubject",
+                        "Resource",
+                        "RiskAssessment",
+                        "RiskEvidenceSynthesis",
+                        "Schedule",
+                        "SearchParameter",
+                        "ServiceRequest",
+                        "Slot",
+                        "Specimen",
+                        "SpecimenDefinition",
+                        "StructureDefinition",
+                        "StructureMap",
+                        "Subscription",
+                        "Substance",
+                        "SubstanceNucleicAcid",
+                        "SubstancePolymer",
+                        "SubstanceProtein",
+                        "SubstanceReferenceInformation",
+                        "SubstanceSourceMaterial",
+                        "SubstanceSpecification",
+                        "SupplyDelivery",
+                        "SupplyRequest",
+                        "Task",
+                        "TerminologyCapabilities",
+                        "TestReport",
+                        "TestScript",
+                        "ValueSet",
+                        "VerificationResult",
+                        "VisionPrescription"
+                    ]
+                },
+                "id": {
+                    "type": "string",
+                    "pattern": "[A-Za-z0-9\\-\\.]{1,64}",
+                    "description": "The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes."
+                },
+                "meta": {
+                    "$ref": "#/definitions/Meta",
+                    "description": "The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content might not always be associated with version changes to the resource."
+                },
+                "implicitRules": {
+                    "type": "string",
+                    "pattern": "\\S*",
+                    "description": "A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content. Often, this is a reference to an implementation guide that defines the special rules along with other profiles etc."
+                },
+                "language": {
+                    "type": "string",
+                    "pattern": "[^\\s]+(\\s[^\\s]+)*",
+                    "description": "The base language in which the resource is written."
+                }
+            },
+            "required": [
+                "resourceType"
+            ]
+        },
+        "DomainResource": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Resource"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "text": {
+                            "$ref": "#/definitions/Narrative",
+                            "description": "A human-readable narrative that contains a summary of the resource and can be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it \"clinically safe\" for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety."
+                        },
+                        "contained": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Resource",
+                                "description": "These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope."
+                            }
+                        },
+                        "extension": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Extension",
+                                "description": "May be used to represent additional information that is not part of the basic definition of the resource. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."
+                            }
+                        },
+                        "modifierExtension": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Extension",
+                                "description": "May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "Patient": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/DomainResource"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "identifier": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Identifier",
+                                "description": "An identifier for this patient."
+                            }
+                        },
+                        "active": {
+                            "type": "boolean",
+                            "description": "Whether this patient record is in active use. \nMany systems use this property to mark as non-current patients, such as those that have not been seen for a period of time based on an organization's business rules.\n\nIt is often used to filter patient lists to exclude inactive patients\n\nDeceased patients may also be marked as inactive for the same reasons, but may be active for some time after death."
+                        },
+                        "name": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/HumanName",
+                                "description": "A name associated with the individual."
+                            }
+                        },
+                        "telecom": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ContactPoint",
+                                "description": "A contact detail (e.g. a telephone number or an email address) by which the individual may be contacted."
+                            }
+                        },
+                        "gender": {
+                            "type": "string",
+                            "enum": [
+                                "male",
+                                "female",
+                                "other",
+                                "unknown"
+                            ],
+                            "description": "Administrative Gender - the gender that the patient is considered to have for administration and record keeping purposes."
+                        },
+                        "birthDate": {
+                            "type": "string",
+                            "pattern": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1]))?)?",
+                            "description": "The date of birth for the individual."
+                        },
+                        "deceasedBoolean": {
+                            "type": "boolean",
+                            "description": "Indicates if the individual is deceased or not."
+                        },
+                        "deceasedDateTime": {
+                            "type": "string",
+                            "pattern": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?",
+                            "description": "Indicates if the individual is deceased or not."
+                        },
+                        "address": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Address",
+                                "description": "An address for the individual."
+                            }
+                        },
+                        "maritalStatus": {
+                            "$ref": "#/definitions/CodeableConcept",
+                            "description": "This field contains a patient's most recent marital (civil) status."
+                        },
+                        "multipleBirthBoolean": {
+                            "type": "boolean",
+                            "description": "Indicates whether the patient is part of a multiple (boolean) or indicates the actual birth order (integer)."
+                        },
+                        "multipleBirthInteger": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Indicates whether the patient is part of a multiple (boolean) or indicates the actual birth order (integer)."
+                        },
+                        "photo": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Attachment",
+                                "description": "Image of the patient."
+                            }
+                        },
+                        "contact": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Patient_Contact",
+                                "description": "A contact party (e.g. guardian, partner, friend) for the patient."
+                            }
+                        },
+                        "communication": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Patient_Communication",
+                                "description": "A language which may be used to communicate with the patient about his or her health."
+                            }
+                        },
+                        "generalPractitioner": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Reference",
+                                "description": "Patient's nominated care provider."
+                            }
+                        },
+                        "managingOrganization": {
+                            "$ref": "#/definitions/Reference",
+                            "description": "Organization that is the custodian of the patient record."
+                        },
+                        "link": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Patient_Link",
+                                "description": "Link to another patient resource that concerns the same actual patient."
+                            }
+                        }
+                    }
+                }
+            ],
+            "example": {
+                "resourceType": "Patient",
+                "meta": {
+                    "versionId": "r0BlxhiEmn",
+                    "lastUpdated": "2020-11-04T11:22:44.719535-05:00",
+                    "source": "1TJxkOPLsZ",
+                    "profile": [
+                        "Kso__wyJbq"
+                    ],
+                    "security": [
+                        {
+                            "system": "RHwf6Wb_Z3",
+                            "version": "mKNfMM_Jwq",
+                            "code": "3ofbYka_hY",
+                            "display": "Uk5cfiCXGy",
+                            "userSelected": true
+                        }
+                    ],
+                    "tag": [
+                        {
+                            "system": "bUpRRWe7RE",
+                            "version": "mXEexnyUm7",
+                            "code": "iKROhIfqrE",
+                            "display": "dI8BrNrGtr",
+                            "userSelected": true
+                        },
+                        {
+                            "code": "ibm/complete-mock"
+                        }
+                    ]
+                },
+                "implicitRules": "zMr27fm3PV",
+                "language": "en-US",
+                "text": {
+                    "status": "empty",
+                    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"></div>"
+                },
+                "identifier": [
+                    {
+                        "use": "usual",
+                        "type": {
+                            "coding": [
+                                {
+                                    "system": "RJxaq9g8Zf",
+                                    "version": "EuO7jZJ7_C",
+                                    "code": "IJVxpXwzZg",
+                                    "display": "IOYwkFCreQ",
+                                    "userSelected": true
+                                }
+                            ],
+                            "text": "CU7r_ze4es"
+                        },
+                        "system": "z99AQHLDbI",
+                        "value": "6PUn73kneX",
+                        "period": {
+                            "start": "2020-11-04T11:22:44.723071-05:00",
+                            "end": "2020-11-04T11:22:44.723448-05:00"
+                        }
+                    }
+                ],
+                "active": true,
+                "name": [
+                    {
+                        "use": "anonymous",
+                        "text": "eVgKYn0WyV",
+                        "family": "jWwVcpNNIB",
+                        "given": [
+                            "TAibsfj1XC"
+                        ],
+                        "prefix": [
+                            "ebYHygfwqO"
+                        ],
+                        "suffix": [
+                            "8AxCS3iEn1"
+                        ],
+                        "period": {
+                            "start": "2020-11-04T11:22:44.728797-05:00",
+                            "end": "2020-11-04T11:22:44.729004-05:00"
+                        }
+                    }
+                ],
+                "telecom": [
+                    {
+                        "system": "phone",
+                        "value": "ZSfW94KHIV",
+                        "use": "mobile",
+                        "rank": 2073248909,
+                        "period": {
+                            "start": "2020-11-04T11:22:44.729389-05:00",
+                            "end": "2020-11-04T11:22:44.729587-05:00"
+                        }
+                    }
+                ],
+                "gender": "male",
+                "birthDate": "2020-11-04",
+                "deceasedBoolean": true,
+                "address": [
+                    {
+                        "use": "old",
+                        "type": "both",
+                        "text": "8sCUd64GpT",
+                        "line": [
+                            "FkxycW_jWz"
+                        ],
+                        "city": "1zZgL1V5wX",
+                        "district": "83GeZoyn21",
+                        "state": "AGTxHBDpbY",
+                        "postalCode": "rLBCFZ4GDN",
+                        "country": "XGE0Hl2h1Y",
+                        "period": {
+                            "start": "2020-11-04T11:22:44.730681-05:00",
+                            "end": "2020-11-04T11:22:44.730896-05:00"
+                        }
+                    }
+                ],
+                "maritalStatus": {
+                    "coding": [
+                        {
+                            "system": "INyk7y2v8N",
+                            "version": "HLVwwyTtHY",
+                            "code": "zFWvXkDMal",
+                            "display": "zAAu4J33Kv",
+                            "userSelected": true
+                        }
+                    ],
+                    "text": "xHjPzLkct4"
+                },
+                "multipleBirthBoolean": true,
+                "photo": [
+                    {
+                        "contentType": "_OEPOWDL32",
+                        "language": "en-US",
+                        "data": "GSwJHnY=",
+                        "url": "SOTL6CpVJ5",
+                        "size": 1481229908,
+                        "hash": "RQJXGkc=",
+                        "title": "1xk8PmxLA3",
+                        "creation": "2020-11-04T11:22:44.732244-05:00"
+                    }
+                ],
+                "contact": [
+                    {
+                        "relationship": [
+                            {
+                                "coding": [
+                                    {
+                                        "system": "i5CmIu6yQh",
+                                        "version": "dxzgL09XjL",
+                                        "code": "fBF5xwe6ia",
+                                        "display": "EvCNTZqQDo",
+                                        "userSelected": true
+                                    }
+                                ],
+                                "text": "wWEfF1CoYg"
+                            }
+                        ],
+                        "name": {
+                            "use": "nickname",
+                            "text": "tWgWTBm3qV",
+                            "family": "zMYs1RWsPN",
+                            "given": [
+                                "23d05nL4vD"
+                            ],
+                            "prefix": [
+                                "CvNSNz3T2k"
+                            ],
+                            "suffix": [
+                                "ASwPu64JGg"
+                            ],
+                            "period": {
+                                "start": "2020-11-04T11:22:44.733696-05:00",
+                                "end": "2020-11-04T11:22:44.733882-05:00"
+                            }
+                        },
+                        "telecom": [
+                            {
+                                "system": "other",
+                                "value": "CzwfPVmpH4",
+                                "use": "temp",
+                                "rank": 218937924,
+                                "period": {
+                                    "start": "2020-11-04T11:22:44.734266-05:00",
+                                    "end": "2020-11-04T11:22:44.734421-05:00"
+                                }
+                            }
+                        ],
+                        "address": {
+                            "use": "old",
+                            "type": "both",
+                            "text": "2kcDsSC1U_",
+                            "line": [
+                                "0vN4AeLMbB"
+                            ],
+                            "city": "vFlcx0o86N",
+                            "district": "lilEVU580K",
+                            "state": "difXmKYswG",
+                            "postalCode": "lNvObZ0En2",
+                            "country": "IgTmZ71LtM",
+                            "period": {
+                                "start": "2020-11-04T11:22:44.735025-05:00",
+                                "end": "2020-11-04T11:22:44.735237-05:00"
+                            }
+                        },
+                        "gender": "male",
+                        "organization": {
+                            "reference": "Organization/Gns4744uko",
+                            "type": "Organization",
+                            "identifier": {
+                                "use": "usual",
+                                "type": {
+                                    "coding": [
+                                        {
+                                            "system": "b23K5e6gb0",
+                                            "version": "YWcAM1o40U",
+                                            "code": "etsGEcBjRS",
+                                            "display": "u2Fa1vwCb_",
+                                            "userSelected": true
+                                        }
+                                    ],
+                                    "text": "ZSX_XmmoOI"
+                                },
+                                "system": "PoKUY202pq",
+                                "value": "A7GkvaX9Oa",
+                                "period": {
+                                    "start": "2020-11-04T11:22:44.736313-05:00",
+                                    "end": "2020-11-04T11:22:44.736521-05:00"
+                                }
+                            },
+                            "display": "UuouSjhMzf"
+                        },
+                        "period": {
+                            "start": "2020-11-04T11:22:44.736853-05:00",
+                            "end": "2020-11-04T11:22:44.737021-05:00"
+                        }
+                    }
+                ],
+                "communication": [
+                    {
+                        "language": {
+                            "coding": [
+                                {
+                                    "system": "urn:ietf:bcp:47",
+                                    "code": "en-US"
+                                }
+                            ]
+                        },
+                        "preferred": true
+                    }
+                ],
+                "generalPractitioner": [
+                    {
+                        "reference": "Organization/SiB3lKoyXv",
+                        "type": "Organization",
+                        "identifier": {
+                            "use": "secondary",
+                            "type": {
+                                "coding": [
+                                    {
+                                        "system": "JNpEgU_lJ_",
+                                        "version": "8JdlQDYmQu",
+                                        "code": "S8NoNWYCYo",
+                                        "display": "l04ex85i8D",
+                                        "userSelected": true
+                                    }
+                                ],
+                                "text": "KjzHzT6Qgs"
+                            },
+                            "system": "Tojs8knd6G",
+                            "value": "ixcvgQqsuk",
+                            "period": {
+                                "start": "2020-11-04T11:22:44.738432-05:00",
+                                "end": "2020-11-04T11:22:44.738599-05:00"
+                            }
+                        },
+                        "display": "SYkDfGKt3F"
+                    }
+                ],
+                "managingOrganization": {
+                    "reference": "Organization/wGF7YMZV5M",
+                    "type": "Organization",
+                    "identifier": {
+                        "use": "usual",
+                        "type": {
+                            "coding": [
+                                {
+                                    "system": "OVFcmV4gEx",
+                                    "version": "OxwM90nouv",
+                                    "code": "zeM4Eevyyp",
+                                    "display": "lNR13TD3lY",
+                                    "userSelected": true
+                                }
+                            ],
+                            "text": "JpAdGMgAuV"
+                        },
+                        "system": "rvw0qz1uHE",
+                        "value": "EoaSD9hvI5",
+                        "period": {
+                            "start": "2020-11-04T11:22:44.739627-05:00",
+                            "end": "2020-11-04T11:22:44.739788-05:00"
+                        }
+                    },
+                    "display": "FuDdPGtvhB"
+                },
+                "link": [
+                    {
+                        "other": {
+                            "reference": "Patient/FFe88dBQqT",
+                            "type": "Patient",
+                            "identifier": {
+                                "use": "old",
+                                "type": {
+                                    "coding": [
+                                        {
+                                            "system": "uiNsFvvVcG",
+                                            "version": "KTfer_IQ6l",
+                                            "code": "2aNmd2mht_",
+                                            "display": "RB5S9fApDv",
+                                            "userSelected": true
+                                        }
+                                    ],
+                                    "text": "1PXSw8PzVJ"
+                                },
+                                "system": "nikT3Fpzga",
+                                "value": "qfFmQBX49U",
+                                "period": {
+                                    "start": "2020-11-04T11:22:44.741126-05:00",
+                                    "end": "2020-11-04T11:22:44.741292-05:00"
+                                }
+                            },
+                            "display": "Gg_9RlJi4t"
+                        },
+                        "type": "refer"
+                    }
+                ]
+            }
+        },
+        "Bundle": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Resource"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "identifier": {
+                            "$ref": "#/definitions/Identifier",
+                            "description": "A persistent identifier for the bundle that won't change as a bundle is copied from server to server."
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": [
+                                "document",
+                                "message",
+                                "transaction",
+                                "transaction-response",
+                                "batch",
+                                "batch-response",
+                                "history",
+                                "searchset",
+                                "collection"
+                            ],
+                            "description": "Indicates the purpose of this bundle - how it is intended to be used."
+                        },
+                        "timestamp": {
+                            "type": "string",
+                            "pattern": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))",
+                            "description": "The date/time that the bundle was assembled - i.e. when the resources were placed in the bundle."
+                        },
+                        "total": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "If a set of search matches, this is the total number of entries of type 'match' across all pages in the search.  It does not include search.mode = 'include' or 'outcome' entries and it does not provide a count of the number of entries in the Bundle."
+                        },
+                        "link": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Bundle_Link",
+                                "description": "A series of links that provide context to this bundle."
+                            }
+                        },
+                        "entry": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Bundle_Entry",
+                                "description": "An entry in a bundle resource - will either contain a resource or information about a resource (transactions and history only)."
+                            }
+                        },
+                        "signature": {
+                            "$ref": "#/definitions/Signature",
+                            "description": "Digital Signature - base64 encoded. XML-DSig or a JWT."
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ]
+                }
+            ],
+            "example": {
+                "resourceType": "Bundle",
+                "meta": {
+                    "versionId": "F7bitzw1Hj",
+                    "lastUpdated": "2020-11-04T11:22:43.502316-05:00",
+                    "source": "JRkgOa8bwm",
+                    "profile": [
+                        "i4gpGowr6Y"
+                    ],
+                    "security": [
+                        {
+                            "system": "lTnQF4OV3w",
+                            "version": "hTth0i4Ivs",
+                            "code": "P6iXDX6DcV",
+                            "display": "rMonvtKiO8",
+                            "userSelected": true
+                        }
+                    ],
+                    "tag": [
+                        {
+                            "system": "4HA_3UN6ab",
+                            "version": "FvMU1dv9n6",
+                            "code": "AjrpSN9l0q",
+                            "display": "V3cjH6t7zX",
+                            "userSelected": true
+                        },
+                        {
+                            "code": "ibm/complete-mock"
+                        }
+                    ]
+                },
+                "implicitRules": "IUOLjdM2gr",
+                "language": "en-US",
+                "identifier": {
+                    "use": "temp",
+                    "type": {
+                        "coding": [
+                            {
+                                "system": "GG7NhXNGqZ",
+                                "version": "hTXMVyhLkS",
+                                "code": "fimixp8PMa",
+                                "display": "aYmxIkjI7w",
+                                "userSelected": true
+                            }
+                        ],
+                        "text": "znbNwNNzOo"
+                    },
+                    "system": "zxGBnkW0WU",
+                    "value": "lpcL4XUHKZ",
+                    "period": {
+                        "start": "2020-11-04T11:22:43.507146-05:00",
+                        "end": "2020-11-04T11:22:43.507335-05:00"
+                    }
+                },
+                "type": "document",
+                "timestamp": "2020-11-04T11:22:43.507779-05:00",
+                "total": 804618139,
+                "link": [
+                    {
+                        "relation": "0h9oqVMQIt",
+                        "url": "N6t6uzHuIy"
+                    }
+                ],
+                "entry": [
+                    {
+                        "link": [
+                            {
+                                "relation": "IWG3UO5Awa",
+                                "url": "MJBFG1zxnb"
+                            }
+                        ],
+                        "fullUrl": "PKkErHU9RX",
+                        "search": {
+                            "mode": "match",
+                            "score": 0.78276202450637411001110876895836554467678070068359375
+                        },
+                        "request": {
+                            "method": "DELETE",
+                            "url": "EX5t3mSMJh",
+                            "ifNoneMatch": "TXPgvN30LK",
+                            "ifModifiedSince": "2020-11-04T11:22:43.514903-05:00",
+                            "ifMatch": "ESkJi0jaVC",
+                            "ifNoneExist": "fuSskChKIq"
+                        },
+                        "response": {
+                            "status": "avVXy1xkRq",
+                            "location": "v0Ub50vvWL",
+                            "etag": "BmCLcXDNuX",
+                            "lastModified": "2020-11-04T11:22:43.516375-05:00"
+                        }
+                    }
+                ],
+                "signature": {
+                    "type": [
+                        {
+                            "system": "YievdsQnmM",
+                            "version": "3um1GW4GVD",
+                            "code": "sNUnxWccmG",
+                            "display": "pqCTozifNV",
+                            "userSelected": true
+                        }
+                    ],
+                    "when": "2020-11-04T11:22:43.518017-05:00",
+                    "who": {
+                        "reference": "Practitioner/7tLbieRmnA",
+                        "type": "Practitioner",
+                        "identifier": {
+                            "use": "secondary",
+                            "type": {
+                                "coding": [
+                                    {
+                                        "system": "9BzciHf_0T",
+                                        "version": "em1dSVwNdC",
+                                        "code": "LD7gU1VdIa",
+                                        "display": "l_je45PsqP",
+                                        "userSelected": true
+                                    }
+                                ],
+                                "text": "Kd2TxyCZR7"
+                            },
+                            "system": "pACafNTDh7",
+                            "value": "_hcXO_NlZg",
+                            "period": {
+                                "start": "2020-11-04T11:22:43.519783-05:00",
+                                "end": "2020-11-04T11:22:43.520066-05:00"
+                            }
+                        },
+                        "display": "l79nsD4sN6"
+                    },
+                    "onBehalfOf": {
+                        "reference": "Practitioner/LiWB2VJ2UG",
+                        "type": "Practitioner",
+                        "identifier": {
+                            "use": "official",
+                            "type": {
+                                "coding": [
+                                    {
+                                        "system": "64W3kvPnCz",
+                                        "version": "1LnrLVgWre",
+                                        "code": "oHtu3WoiKi",
+                                        "display": "gMKD8fdCjt",
+                                        "userSelected": true
+                                    }
+                                ],
+                                "text": "bu5V13p166"
+                            },
+                            "system": "Graf7De_yt",
+                            "value": "UWJRgHe9wr",
+                            "period": {
+                                "start": "2020-11-04T11:22:43.544663-05:00",
+                                "end": "2020-11-04T11:22:43.545138-05:00"
+                            }
+                        },
+                        "display": "kQ5612idGd"
+                    },
+                    "targetFormat": "AQCVaUpSER",
+                    "sigFormat": "FxtGIjypV6",
+                    "data": "dUUnF3I="
+                }
+            }
+        },
+        "OperationOutcome": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/DomainResource"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "issue": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/OperationOutcome_Issue",
+                                "description": "An error, warning, or information message that results from a system action."
+                            }
+                        }
+                    },
+                    "required": [
+                        "issue"
+                    ]
+                }
+            ],
+            "example": {
+                "resourceType": "OperationOutcome",
+                "meta": {
+                    "versionId": "q63JAUPuUM",
+                    "lastUpdated": "2020-11-04T11:22:40.494613-05:00",
+                    "source": "lwnaIGbKJn",
+                    "profile": [
+                        "XGQPxL1j9k"
+                    ],
+                    "security": [
+                        {
+                            "system": "sPgaKWp0jQ",
+                            "version": "wZHLBfjatw",
+                            "code": "DMQqy4R3E8",
+                            "display": "mmxOeLn3hG",
+                            "userSelected": true
+                        }
+                    ],
+                    "tag": [
+                        {
+                            "system": "MtLYCBYPWS",
+                            "version": "8Ak7HZQrke",
+                            "code": "0DRWc7UuJB",
+                            "display": "6NXvm6cEoG",
+                            "userSelected": true
+                        },
+                        {
+                            "code": "ibm/complete-mock"
+                        }
+                    ]
+                },
+                "implicitRules": "siFyYo720q",
+                "language": "en-US",
+                "text": {
+                    "status": "generated",
+                    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"></div>"
+                },
+                "issue": [
+                    {
+                        "severity": "fatal",
+                        "code": "required",
+                        "details": {
+                            "coding": [
+                                {
+                                    "system": "YAwo1XN_fv",
+                                    "version": "9ycWn1vQBR",
+                                    "code": "Y4ci7ASL_1",
+                                    "display": "lq_CJ5bq6Z",
+                                    "userSelected": true
+                                }
+                            ],
+                            "text": "aWHd4ZkhaW"
+                        },
+                        "diagnostics": "yew1JE2w0X",
+                        "location": [
+                            "ZDqBVS3Xgx"
+                        ],
+                        "expression": [
+                            "yYfbNaNi8V"
+                        ]
+                    }
+                ]
+            }
+        },
+        "Bundle_Entry": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BackboneElement"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "link": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Bundle_Link",
+                                "description": "A series of links that provide context to this entry."
+                            }
+                        },
+                        "fullUrl": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "The Absolute URL for the resource.  The fullUrl SHALL NOT disagree with the id in the resource - i.e. if the fullUrl is not a urn:uuid, the URL shall be version-independent URL consistent with the Resource.id. The fullUrl is a version independent reference to the resource. The fullUrl element SHALL have a value except that: \n* fullUrl can be empty on a POST (although it does not need to when specifying a temporary id for reference in the bundle)\n* Results from operations might involve resources that are not identified."
+                        },
+                        "resource": {
+                            "$ref": "#/definitions/Resource",
+                            "description": "The Resource for the entry. The purpose/meaning of the resource is determined by the Bundle.type."
+                        },
+                        "search": {
+                            "$ref": "#/definitions/Bundle_Entry_Search",
+                            "description": "Information about the search process that lead to the creation of this entry."
+                        },
+                        "request": {
+                            "$ref": "#/definitions/Bundle_Entry_Request",
+                            "description": "Additional information about how this entry should be processed as part of a transaction or batch.  For history, it shows how the entry was processed to create the version contained in the entry."
+                        },
+                        "response": {
+                            "$ref": "#/definitions/Bundle_Entry_Response",
+                            "description": "Indicates the results of processing the corresponding 'request' entry in the batch or transaction being responded to or what the results of an operation where when returning history."
+                        }
+                    }
+                }
+            ]
+        },
+        "Bundle_Entry_Response": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BackboneElement"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "status": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "The status code returned by processing this entry. The status SHALL start with a 3 digit HTTP code (e.g. 404) and may contain the standard HTTP description associated with the status code."
+                        },
+                        "location": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "The location header created by processing this operation, populated if the operation returns a location."
+                        },
+                        "etag": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "The Etag for the resource, if the operation for the entry produced a versioned resource (see [Resource Metadata and Versioning](http.html#versioning) and [Managing Resource Contention](http.html#concurrency))."
+                        },
+                        "lastModified": {
+                            "type": "string",
+                            "pattern": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))",
+                            "description": "The date/time that the resource was modified on the server."
+                        },
+                        "outcome": {
+                            "$ref": "#/definitions/Resource",
+                            "description": "An OperationOutcome containing hints and warnings produced as part of processing this entry in a batch or transaction."
+                        }
+                    },
+                    "required": [
+                        "status"
+                    ]
+                }
+            ]
+        },
+        "Bundle_Entry_Request": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BackboneElement"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "method": {
+                            "type": "string",
+                            "enum": [
+                                "GET",
+                                "HEAD",
+                                "POST",
+                                "PUT",
+                                "DELETE",
+                                "PATCH"
+                            ],
+                            "description": "In a transaction or batch, this is the HTTP action to be executed for this entry. In a history bundle, this indicates the HTTP action that occurred."
+                        },
+                        "url": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "The URL for this entry, relative to the root (the address to which the request is posted)."
+                        },
+                        "ifNoneMatch": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "If the ETag values match, return a 304 Not Modified status. See the API documentation for [\"Conditional Read\"](http.html#cread)."
+                        },
+                        "ifModifiedSince": {
+                            "type": "string",
+                            "pattern": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))",
+                            "description": "Only perform the operation if the last updated date matches. See the API documentation for [\"Conditional Read\"](http.html#cread)."
+                        },
+                        "ifMatch": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "Only perform the operation if the Etag value matches. For more information, see the API section [\"Managing Resource Contention\"](http.html#concurrency)."
+                        },
+                        "ifNoneExist": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "Instruct the server not to perform the create if a specified resource already exists. For further information, see the API documentation for [\"Conditional Create\"](http.html#ccreate). This is just the query portion of the URL - what follows the \"?\" (not including the \"?\")."
+                        }
+                    },
+                    "required": [
+                        "method",
+                        "url"
+                    ]
+                }
+            ]
+        },
+        "Bundle_Entry_Search": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BackboneElement"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "mode": {
+                            "type": "string",
+                            "enum": [
+                                "match",
+                                "include",
+                                "outcome"
+                            ],
+                            "description": "Why this entry is in the result set - whether it's included as a match or because of an _include requirement, or to convey information or warning information about the search process."
+                        },
+                        "score": {
+                            "type": "number",
+                            "description": "When searching, the server's search ranking score for the entry."
+                        }
+                    }
+                }
+            ]
+        },
+        "Bundle_Link": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BackboneElement"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "relation": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "A name which details the functional use for this link - see [http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1](http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1)."
+                        },
+                        "url": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "The reference details for the link."
+                        }
+                    },
+                    "required": [
+                        "relation",
+                        "url"
+                    ]
+                }
+            ]
+        },
+        "OperationOutcome_Issue": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BackboneElement"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "severity": {
+                            "type": "string",
+                            "enum": [
+                                "fatal",
+                                "error",
+                                "warning",
+                                "information"
+                            ],
+                            "description": "Indicates whether the issue indicates a variation from successful processing."
+                        },
+                        "code": {
+                            "type": "string",
+                            "enum": [
+                                "invalid",
+                                "structure",
+                                "required",
+                                "value",
+                                "invariant",
+                                "security",
+                                "login",
+                                "unknown",
+                                "expired",
+                                "forbidden",
+                                "suppressed",
+                                "processing",
+                                "not-supported",
+                                "duplicate",
+                                "multiple-matches",
+                                "not-found",
+                                "deleted",
+                                "too-long",
+                                "code-invalid",
+                                "extension",
+                                "too-costly",
+                                "business-rule",
+                                "conflict",
+                                "transient",
+                                "lock-error",
+                                "no-store",
+                                "exception",
+                                "timeout",
+                                "incomplete",
+                                "throttled",
+                                "informational"
+                            ],
+                            "description": "Describes the type of the issue. The system that creates an OperationOutcome SHALL choose the most applicable code from the IssueType value set, and may additional provide its own code for the error in the details element."
+                        },
+                        "details": {
+                            "$ref": "#/definitions/CodeableConcept",
+                            "description": "Additional details about the error. This may be a text description of the error or a system code that identifies the error."
+                        },
+                        "diagnostics": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "Additional diagnostic information about the issue."
+                        },
+                        "location": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "[ \\r\\n\\t\\S]+",
+                                "description": "This element is deprecated because it is XML specific. It is replaced by issue.expression, which is format independent, and simpler to parse. \n\nFor resource issues, this will be a simple XPath limited to element names, repetition indicators and the default child accessor that identifies one of the elements in the resource that caused this issue to be raised.  For HTTP errors, will be \"http.\" + the parameter name."
+                            }
+                        },
+                        "expression": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "[ \\r\\n\\t\\S]+",
+                                "description": "A [simple subset of FHIRPath](fhirpath.html#simple) limited to element names, repetition indicators and the default child accessor that identifies one of the elements in the resource that caused this issue to be raised."
+                            }
+                        }
+                    },
+                    "required": [
+                        "severity",
+                        "code"
+                    ]
+                }
+            ]
+        },
+        "Patient_Link": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BackboneElement"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "other": {
+                            "$ref": "#/definitions/Reference",
+                            "description": "The other patient resource that the link refers to."
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": [
+                                "replaced-by",
+                                "replaces",
+                                "refer",
+                                "seealso"
+                            ],
+                            "description": "The type of link between this patient resource and another patient resource."
+                        }
+                    },
+                    "required": [
+                        "other",
+                        "type"
+                    ]
+                }
+            ]
+        },
+        "Patient_Communication": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BackboneElement"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "language": {
+                            "$ref": "#/definitions/CodeableConcept",
+                            "description": "The ISO-639-1 alpha 2 code in lower case for the language, optionally followed by a hyphen and the ISO-3166-1 alpha 2 code for the region in upper case; e.g. \"en\" for English, or \"en-US\" for American English versus \"en-EN\" for England English."
+                        },
+                        "preferred": {
+                            "type": "boolean",
+                            "description": "Indicates whether or not the patient prefers this language (over other languages he masters up a certain level)."
+                        }
+                    },
+                    "required": [
+                        "language"
+                    ]
+                }
+            ]
+        },
+        "Patient_Contact": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BackboneElement"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "relationship": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CodeableConcept",
+                                "description": "The nature of the relationship between the patient and the contact person."
+                            }
+                        },
+                        "name": {
+                            "$ref": "#/definitions/HumanName",
+                            "description": "A name associated with the contact person."
+                        },
+                        "telecom": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ContactPoint",
+                                "description": "A contact detail for the person, e.g. a telephone number or an email address."
+                            }
+                        },
+                        "address": {
+                            "$ref": "#/definitions/Address",
+                            "description": "Address for the contact person."
+                        },
+                        "gender": {
+                            "type": "string",
+                            "enum": [
+                                "male",
+                                "female",
+                                "other",
+                                "unknown"
+                            ],
+                            "description": "Administrative Gender - the gender that the contact person is considered to have for administration and record keeping purposes."
+                        },
+                        "organization": {
+                            "$ref": "#/definitions/Reference",
+                            "description": "Organization on behalf of which the contact is acting or for which the contact is working."
+                        },
+                        "period": {
+                            "$ref": "#/definitions/Period",
+                            "description": "The period during which this contact person or organization is valid to be contacted relating to this patient."
+                        }
+                    }
+                }
+            ]
+        },
+        "Element": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "pattern": "[A-Za-z0-9\\-\\.]{1,64}",
+                    "description": "Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."
+                },
+                "extension": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Extension",
+                        "description": "May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."
+                    },
+                    "example": [
+                        {
+                            "url": "http://example.com",
+                            "valueString": "text value"
+                        }
+                    ]
+                }
+            }
+        },
+        "BackboneElement": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "modifierExtension": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Extension",
+                                "description": "May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "Address": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "use": {
+                            "type": "string",
+                            "enum": [
+                                "home",
+                                "work",
+                                "temp",
+                                "old",
+                                "billing"
+                            ],
+                            "description": "The purpose of this address."
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": [
+                                "postal",
+                                "physical",
+                                "both"
+                            ],
+                            "description": "Distinguishes between physical addresses (those you can visit) and mailing addresses (e.g. PO Boxes and care-of addresses). Most addresses are both."
+                        },
+                        "text": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "Specifies the entire address as it should be displayed e.g. on a postal label. This may be provided instead of or as well as the specific parts."
+                        },
+                        "line": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "[ \\r\\n\\t\\S]+",
+                                "description": "This component contains the house number, apartment number, street name, street direction,  P.O. Box number, delivery hints, and similar address information."
+                            }
+                        },
+                        "city": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "The name of the city, town, suburb, village or other community or delivery center."
+                        },
+                        "district": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "The name of the administrative area (county)."
+                        },
+                        "state": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (e.g. US 2 letter state codes)."
+                        },
+                        "postalCode": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "A postal code designating a region defined by the postal service."
+                        },
+                        "country": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "Country - a nation as commonly understood or generally accepted."
+                        },
+                        "period": {
+                            "$ref": "#/definitions/Period",
+                            "description": "Time period when address was/is in use."
+                        }
+                    }
+                }
+            ]
+        },
+        "Age": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Quantity"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                    }
+                }
+            ]
+        },
+        "Annotation": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "authorReference": {
+                            "$ref": "#/definitions/Reference",
+                            "description": "The individual responsible for making the annotation."
+                        },
+                        "authorString": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "The individual responsible for making the annotation."
+                        },
+                        "time": {
+                            "type": "string",
+                            "pattern": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?",
+                            "description": "Indicates when this particular annotation was made."
+                        },
+                        "text": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "The text of the annotation in markdown format."
+                        }
+                    },
+                    "required": [
+                        "text"
+                    ]
+                }
+            ]
+        },
+        "Attachment": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "contentType": {
+                            "type": "string",
+                            "pattern": "[^\\s]+(\\s[^\\s]+)*",
+                            "description": "Identifies the type of the data in the attachment and allows a method to be chosen to interpret or render the data. Includes mime type parameters such as charset where appropriate."
+                        },
+                        "language": {
+                            "type": "string",
+                            "pattern": "[^\\s]+(\\s[^\\s]+)*",
+                            "description": "The human language of the content. The value can be any valid value according to BCP 47."
+                        },
+                        "data": {
+                            "type": "string",
+                            "pattern": "(\\s*([0-9a-zA-Z\\+\\=]){4}\\s*)+",
+                            "description": "The actual data of the attachment - a sequence of bytes, base64 encoded."
+                        },
+                        "url": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "A location where the data can be accessed."
+                        },
+                        "size": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "The number of bytes of data that make up this attachment (before base64 encoding, if that is done)."
+                        },
+                        "hash": {
+                            "type": "string",
+                            "pattern": "(\\s*([0-9a-zA-Z\\+\\=]){4}\\s*)+",
+                            "description": "The calculated hash of the data using SHA-1. Represented using base64."
+                        },
+                        "title": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "A label or set of text to display in place of the data."
+                        },
+                        "creation": {
+                            "type": "string",
+                            "pattern": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?",
+                            "description": "The date that the attachment was first created."
+                        }
+                    }
+                }
+            ]
+        },
+        "CodeableConcept": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "coding": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Coding",
+                                "description": "A reference to a code defined by a terminology system."
+                            }
+                        },
+                        "text": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user."
+                        }
+                    }
+                }
+            ]
+        },
+        "Coding": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "system": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "The identification of the code system that defines the meaning of the symbol in the code."
+                        },
+                        "version": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "The version of the code system which was used when choosing this code. Note that a well-maintained code system does not need the version reported, because the meaning of codes is consistent across versions. However this cannot consistently be assured, and when the meaning is not guaranteed to be consistent, the version SHOULD be exchanged."
+                        },
+                        "code": {
+                            "type": "string",
+                            "pattern": "[^\\s]+(\\s[^\\s]+)*",
+                            "description": "A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)."
+                        },
+                        "display": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "A representation of the meaning of the code in the system, following the rules of the system."
+                        },
+                        "userSelected": {
+                            "type": "boolean",
+                            "description": "Indicates that this coding was chosen by a user directly - e.g. off a pick list of available items (codes or displays)."
+                        }
+                    }
+                }
+            ]
+        },
+        "ContactPoint": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "system": {
+                            "type": "string",
+                            "enum": [
+                                "phone",
+                                "fax",
+                                "email",
+                                "pager",
+                                "url",
+                                "sms",
+                                "other"
+                            ],
+                            "description": "Telecommunications form for contact point - what communications system is required to make use of the contact."
+                        },
+                        "value": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "The actual contact point details, in a form that is meaningful to the designated communication system (i.e. phone number or email address)."
+                        },
+                        "use": {
+                            "type": "string",
+                            "enum": [
+                                "home",
+                                "work",
+                                "temp",
+                                "old",
+                                "mobile"
+                            ],
+                            "description": "Identifies the purpose for the contact point."
+                        },
+                        "rank": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Specifies a preferred order in which to use a set of contacts. ContactPoints with lower rank values are more preferred than those with higher rank values."
+                        },
+                        "period": {
+                            "$ref": "#/definitions/Period",
+                            "description": "Time period when the contact point was/is in use."
+                        }
+                    }
+                }
+            ]
+        },
+        "Count": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Quantity"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                    }
+                }
+            ]
+        },
+        "Distance": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Quantity"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                    }
+                }
+            ]
+        },
+        "Duration": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Quantity"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                    }
+                }
+            ]
+        },
+        "HumanName": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "use": {
+                            "type": "string",
+                            "enum": [
+                                "usual",
+                                "official",
+                                "temp",
+                                "nickname",
+                                "anonymous",
+                                "old",
+                                "maiden"
+                            ],
+                            "description": "Identifies the purpose for this name."
+                        },
+                        "text": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "Specifies the entire name as it should be displayed e.g. on an application UI. This may be provided instead of or as well as the specific parts."
+                        },
+                        "family": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "The part of a name that links to the genealogy. In some cultures (e.g. Eritrea) the family name of a son is the first name of his father."
+                        },
+                        "given": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "[ \\r\\n\\t\\S]+",
+                                "description": "Given name."
+                            }
+                        },
+                        "prefix": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "[ \\r\\n\\t\\S]+",
+                                "description": "Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that appears at the start of the name."
+                            }
+                        },
+                        "suffix": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "[ \\r\\n\\t\\S]+",
+                                "description": "Part of the name that is acquired as a title due to academic, legal, employment or nobility status, etc. and that appears at the end of the name."
+                            }
+                        },
+                        "period": {
+                            "$ref": "#/definitions/Period",
+                            "description": "Indicates the period of time when this name was valid for the named person."
+                        }
+                    }
+                }
+            ]
+        },
+        "Identifier": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "use": {
+                            "type": "string",
+                            "enum": [
+                                "usual",
+                                "official",
+                                "temp",
+                                "secondary",
+                                "old"
+                            ],
+                            "description": "The purpose of this identifier."
+                        },
+                        "type": {
+                            "$ref": "#/definitions/CodeableConcept",
+                            "description": "A coded type for the identifier that can be used to determine which identifier to use for a specific purpose."
+                        },
+                        "system": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "Establishes the namespace for the value - that is, a URL that describes a set values that are unique."
+                        },
+                        "value": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "The portion of the identifier typically relevant to the user and which is unique within the context of the system."
+                        },
+                        "period": {
+                            "$ref": "#/definitions/Period",
+                            "description": "Time period during which identifier is/was valid for use."
+                        },
+                        "assigner": {
+                            "$ref": "#/definitions/Reference",
+                            "description": "Organization that issued/manages the identifier.",
+                            "example": {
+                                "reference": "Organization/123",
+                                "type": "Organization",
+                                "display": "The Assigning Organization"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "Money": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "value": {
+                            "type": "number",
+                            "description": "Numerical value (with implicit precision)."
+                        },
+                        "currency": {
+                            "type": "string",
+                            "pattern": "[^\\s]+(\\s[^\\s]+)*",
+                            "description": "ISO 4217 Currency Code."
+                        }
+                    }
+                }
+            ]
+        },
+        "MoneyQuantity": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Quantity"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                    }
+                }
+            ]
+        },
+        "Period": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "start": {
+                            "type": "string",
+                            "pattern": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?",
+                            "description": "The start of the period. The boundary is inclusive."
+                        },
+                        "end": {
+                            "type": "string",
+                            "pattern": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?",
+                            "description": "The end of the period. If the end of the period is missing, it means no end was known or planned at the time the instance was created. The start may be in the past, and the end date in the future, which means that period is expected/planned to end at that time."
+                        }
+                    }
+                }
+            ]
+        },
+        "Quantity": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "value": {
+                            "type": "number",
+                            "description": "The value of the measured amount. The value includes an implicit precision in the presentation of the value."
+                        },
+                        "comparator": {
+                            "type": "string",
+                            "enum": [
+                                "<",
+                                "<=",
+                                ">=",
+                                ">"
+                            ],
+                            "description": "How the value should be understood and represented - whether the actual value is greater or less than the stated value due to measurement issues; e.g. if the comparator is \"<\" , then the real value is < stated value."
+                        },
+                        "unit": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "A human-readable form of the unit."
+                        },
+                        "system": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "The identification of the system that provides the coded form of the unit."
+                        },
+                        "code": {
+                            "type": "string",
+                            "pattern": "[^\\s]+(\\s[^\\s]+)*",
+                            "description": "A computer processable form of the unit in some unit representation system."
+                        }
+                    }
+                }
+            ]
+        },
+        "Range": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "low": {
+                            "$ref": "#/definitions/SimpleQuantity",
+                            "description": "The low limit. The boundary is inclusive."
+                        },
+                        "high": {
+                            "$ref": "#/definitions/SimpleQuantity",
+                            "description": "The high limit. The boundary is inclusive."
+                        }
+                    }
+                }
+            ]
+        },
+        "Ratio": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "numerator": {
+                            "$ref": "#/definitions/Quantity",
+                            "description": "The value of the numerator."
+                        },
+                        "denominator": {
+                            "$ref": "#/definitions/Quantity",
+                            "description": "The value of the denominator."
+                        }
+                    }
+                }
+            ]
+        },
+        "Reference": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "reference": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "A reference to a location at which the other resource is found. The reference may be a relative reference, in which case it is relative to the service base URL, or an absolute URL that resolves to the location where the resource is found. The reference may be version specific or not. If the reference is not to a FHIR RESTful server, then it should be assumed to be version specific. Internal fragment references (start with '#') refer to contained resources."
+                        },
+                        "type": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "The expected type of the target of the reference. If both Reference.type and Reference.reference are populated and Reference.reference is a FHIR URL, both SHALL be consistent.\n\nThe type is the Canonical URL of Resource Definition that is the type this reference refers to. References are URLs that are relative to http://hl7.org/fhir/StructureDefinition/ e.g. \"Patient\" is a reference to http://hl7.org/fhir/StructureDefinition/Patient. Absolute URLs are only allowed for logical models (and can only be used in references in logical models, not resources)."
+                        },
+                        "identifier": {
+                            "$ref": "#/definitions/Identifier",
+                            "description": "An identifier for the target resource. This is used when there is no way to reference the other resource directly, either because the entity it represents is not available through a FHIR server, or because there is no way for the author of the resource to convert a known identifier to an actual location. There is no requirement that a Reference.identifier point to something that is actually exposed as a FHIR instance, but it SHALL point to a business concept that would be expected to be exposed as a FHIR instance, and that instance would need to be of a FHIR resource type allowed by the reference."
+                        },
+                        "display": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "Plain text narrative that identifies the resource in addition to the resource reference."
+                        }
+                    }
+                }
+            ]
+        },
+        "SampledData": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "origin": {
+                            "$ref": "#/definitions/SimpleQuantity",
+                            "description": "The base quantity that a measured value of zero represents. In addition, this provides the units of the entire measurement series."
+                        },
+                        "period": {
+                            "type": "number",
+                            "description": "The length of time between sampling times, measured in milliseconds."
+                        },
+                        "factor": {
+                            "type": "number",
+                            "description": "A correction factor that is applied to the sampled data points before they are added to the origin."
+                        },
+                        "lowerLimit": {
+                            "type": "number",
+                            "description": "The lower limit of detection of the measured points. This is needed if any of the data points have the value \"L\" (lower than detection limit)."
+                        },
+                        "upperLimit": {
+                            "type": "number",
+                            "description": "The upper limit of detection of the measured points. This is needed if any of the data points have the value \"U\" (higher than detection limit)."
+                        },
+                        "dimensions": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "The number of sample points at each time point. If this value is greater than one, then the dimensions will be interlaced - all the sample points for a point in time will be recorded at once."
+                        },
+                        "data": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "A series of data points which are decimal values separated by a single space (character u20). The special values \"E\" (error), \"L\" (below detection limit) and \"U\" (above detection limit) can also be used in place of a decimal value."
+                        }
+                    },
+                    "required": [
+                        "origin",
+                        "period",
+                        "dimensions"
+                    ]
+                }
+            ]
+        },
+        "SimpleQuantity": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Quantity"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                    }
+                }
+            ]
+        },
+        "Signature": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Coding",
+                                "description": "An indication of the reason that the entity signed this document. This may be explicitly included as part of the signature information and can be used when determining accountability for various actions concerning the document."
+                            }
+                        },
+                        "when": {
+                            "type": "string",
+                            "pattern": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))",
+                            "description": "When the digital signature was signed."
+                        },
+                        "who": {
+                            "$ref": "#/definitions/Reference",
+                            "description": "A reference to an application-usable description of the identity that signed  (e.g. the signature used their private key)."
+                        },
+                        "onBehalfOf": {
+                            "$ref": "#/definitions/Reference",
+                            "description": "A reference to an application-usable description of the identity that is represented by the signature."
+                        },
+                        "targetFormat": {
+                            "type": "string",
+                            "pattern": "[^\\s]+(\\s[^\\s]+)*",
+                            "description": "A mime type that indicates the technical format of the target resources signed by the signature."
+                        },
+                        "sigFormat": {
+                            "type": "string",
+                            "pattern": "[^\\s]+(\\s[^\\s]+)*",
+                            "description": "A mime type that indicates the technical format of the signature. Important mime types are application/signature+xml for X ML DigSig, application/jose for JWS, and image/* for a graphical image of a signature, etc."
+                        },
+                        "data": {
+                            "type": "string",
+                            "pattern": "(\\s*([0-9a-zA-Z\\+\\=]){4}\\s*)+",
+                            "description": "The base64 encoding of the Signature content. When signature is not recorded electronically this element would be empty."
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "when",
+                        "who"
+                    ]
+                }
+            ]
+        },
+        "Timing": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BackboneElement"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "event": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?",
+                                "description": "Identifies specific times when the event occurs."
+                            }
+                        },
+                        "repeat": {
+                            "$ref": "#/definitions/Timing_Repeat",
+                            "description": "A set of rules that describe when the event is scheduled."
+                        },
+                        "code": {
+                            "$ref": "#/definitions/CodeableConcept",
+                            "description": "A code for the timing schedule (or just text in code.text). Some codes such as BID are ubiquitous, but many institutions define their own additional codes. If a code is provided, the code is understood to be a complete statement of whatever is specified in the structured timing data, and either the code or the data may be used to interpret the Timing, with the exception that .repeat.bounds still applies over the code (and is not contained in the code)."
+                        }
+                    }
+                }
+            ]
+        },
+        "Timing_Repeat": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/BackboneElement"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "boundsDuration": {
+                            "$ref": "#/definitions/Duration",
+                            "description": "Either a duration for the length of the timing schedule, a range of possible length, or outer bounds for start and/or end limits of the timing schedule."
+                        },
+                        "boundsRange": {
+                            "$ref": "#/definitions/Range",
+                            "description": "Either a duration for the length of the timing schedule, a range of possible length, or outer bounds for start and/or end limits of the timing schedule."
+                        },
+                        "boundsPeriod": {
+                            "$ref": "#/definitions/Period",
+                            "description": "Either a duration for the length of the timing schedule, a range of possible length, or outer bounds for start and/or end limits of the timing schedule."
+                        },
+                        "count": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "A total count of the desired number of repetitions across the duration of the entire timing specification. If countMax is present, this element indicates the lower bound of the allowed range of count values."
+                        },
+                        "countMax": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "If present, indicates that the count is a range - so to perform the action between [count] and [countMax] times."
+                        },
+                        "duration": {
+                            "type": "number",
+                            "description": "How long this thing happens for when it happens. If durationMax is present, this element indicates the lower bound of the allowed range of the duration."
+                        },
+                        "durationMax": {
+                            "type": "number",
+                            "description": "If present, indicates that the duration is a range - so to perform the action between [duration] and [durationMax] time length."
+                        },
+                        "durationUnit": {
+                            "type": "string",
+                            "enum": [
+                                "s",
+                                "min",
+                                "h",
+                                "d",
+                                "wk",
+                                "mo",
+                                "a"
+                            ],
+                            "description": "The units of time for the duration, in UCUM units."
+                        },
+                        "frequency": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "The number of times to repeat the action within the specified period. If frequencyMax is present, this element indicates the lower bound of the allowed range of the frequency."
+                        },
+                        "frequencyMax": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "If present, indicates that the frequency is a range - so to repeat between [frequency] and [frequencyMax] times within the period or period range."
+                        },
+                        "period": {
+                            "type": "number",
+                            "description": "Indicates the duration of time over which repetitions are to occur; e.g. to express \"3 times per day\", 3 would be the frequency and \"1 day\" would be the period. If periodMax is present, this element indicates the lower bound of the allowed range of the period length."
+                        },
+                        "periodMax": {
+                            "type": "number",
+                            "description": "If present, indicates that the period is a range from [period] to [periodMax], allowing expressing concepts such as \"do this once every 3-5 days."
+                        },
+                        "periodUnit": {
+                            "type": "string",
+                            "enum": [
+                                "s",
+                                "min",
+                                "h",
+                                "d",
+                                "wk",
+                                "mo",
+                                "a"
+                            ],
+                            "description": "The units of time for the period in UCUM units."
+                        },
+                        "dayOfWeek": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "mon",
+                                    "tue",
+                                    "wed",
+                                    "thu",
+                                    "fri",
+                                    "sat",
+                                    "sun"
+                                ],
+                                "description": "If one or more days of week is provided, then the action happens only on the specified day(s)."
+                            }
+                        },
+                        "timeOfDay": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?",
+                                "description": "Specified time of day for action to take place."
+                            }
+                        },
+                        "when": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "MORN",
+                                    "MORN.early",
+                                    "MORN.late",
+                                    "NOON",
+                                    "AFT",
+                                    "AFT.early",
+                                    "AFT.late",
+                                    "EVE",
+                                    "EVE.early",
+                                    "EVE.late",
+                                    "NIGHT",
+                                    "PHS",
+                                    "HS",
+                                    "WAKE",
+                                    "C",
+                                    "CM",
+                                    "CD",
+                                    "CV",
+                                    "AC",
+                                    "ACM",
+                                    "ACD",
+                                    "ACV",
+                                    "PC",
+                                    "PCM",
+                                    "PCD",
+                                    "PCV"
+                                ],
+                                "description": "An approximate time period during the day, potentially linked to an event of daily living that indicates when the action should occur."
+                            }
+                        },
+                        "offset": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "The number of minutes from the event. If the event code does not indicate whether the minutes is before or after the event, then the offset is assumed to be after the event."
+                        }
+                    }
+                }
+            ]
+        },
+        "ContactDetail": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "The name of an individual to contact."
+                        },
+                        "telecom": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ContactPoint",
+                                "description": "The contact details for the individual (if a name was provided) or the organization."
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "RelatedArtifact": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "enum": [
+                                "documentation",
+                                "justification",
+                                "citation",
+                                "predecessor",
+                                "successor",
+                                "derived-from",
+                                "depends-on",
+                                "composed-of"
+                            ],
+                            "description": "The type of relationship to the related artifact."
+                        },
+                        "label": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "A short label that can be used to reference the citation from elsewhere in the containing artifact, such as a footnote index."
+                        },
+                        "display": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "A brief description of the document or knowledge resource being referenced, suitable for display to a consumer."
+                        },
+                        "citation": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "A bibliographic citation for the related artifact. This text SHOULD be formatted according to an accepted citation format."
+                        },
+                        "url": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "A url for the artifact that can be followed to access the actual content."
+                        },
+                        "document": {
+                            "$ref": "#/definitions/Attachment",
+                            "description": "The document being referenced, represented as an attachment. This is exclusive with the resource element."
+                        },
+                        "resource": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "The related resource, such as a library, value set, profile, or other knowledge resource."
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ]
+                }
+            ]
+        },
+        "UsageContext": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "code": {
+                            "$ref": "#/definitions/Coding",
+                            "description": "A code that identifies the type of context being specified by this usage context."
+                        },
+                        "valueCodeableConcept": {
+                            "$ref": "#/definitions/CodeableConcept",
+                            "description": "A value that defines the context specified in this context of use. The interpretation of the value is defined by the code."
+                        },
+                        "valueQuantity": {
+                            "$ref": "#/definitions/Quantity",
+                            "description": "A value that defines the context specified in this context of use. The interpretation of the value is defined by the code."
+                        },
+                        "valueRange": {
+                            "$ref": "#/definitions/Range",
+                            "description": "A value that defines the context specified in this context of use. The interpretation of the value is defined by the code."
+                        },
+                        "valueReference": {
+                            "$ref": "#/definitions/Reference",
+                            "description": "A value that defines the context specified in this context of use. The interpretation of the value is defined by the code."
+                        }
+                    },
+                    "required": [
+                        "code"
+                    ]
+                }
+            ]
+        },
+        "Meta": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "versionId": {
+                            "type": "string",
+                            "pattern": "[A-Za-z0-9\\-\\.]{1,64}",
+                            "description": "The version specific identifier, as it appears in the version portion of the URL. This value changes when the resource is created, updated, or deleted."
+                        },
+                        "lastUpdated": {
+                            "type": "string",
+                            "pattern": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))",
+                            "description": "When the resource last changed - e.g. when the version changed."
+                        },
+                        "source": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "A uri that identifies the source system of the resource. This provides a minimal amount of [Provenance](provenance.html#) information that can be used to track or differentiate the source of information in the resource. The source may identify another FHIR server, document, message, database, etc."
+                        },
+                        "profile": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "\\S*",
+                                "description": "A list of profiles (references to [StructureDefinition](structuredefinition.html#) resources) that this resource claims to conform to. The URL is a reference to [StructureDefinition.url](structuredefinition-definitions.html#StructureDefinition.url)."
+                            }
+                        },
+                        "security": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Coding",
+                                "description": "Security labels applied to this resource. These tags connect specific resources to the overall security policy and infrastructure."
+                            }
+                        },
+                        "tag": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Coding",
+                                "description": "Tags applied to this resource. Tags are intended to be used to identify and relate resources to process and workflow, and applications are not required to consider the tags when interpreting the meaning of a resource."
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "Narrative": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "status": {
+                            "type": "string",
+                            "enum": [
+                                "generated",
+                                "extensions",
+                                "additional",
+                                "empty"
+                            ],
+                            "description": "The status of the narrative - whether it's entirely generated (from just the defined data or the extensions too), or whether a human authored it and it may contain additional data."
+                        },
+                        "div": {
+                            "type": "string",
+                            "description": "The actual narrative content, a stripped down version of XHTML."
+                        }
+                    },
+                    "required": [
+                        "status",
+                        "div"
+                    ]
+                }
+            ]
+        },
+        "Extension": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Element"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "url": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "Source of the definition for the extension code - a logical name or a URL."
+                        },
+                        "valueBase64Binary": {
+                            "type": "string",
+                            "pattern": "(\\s*([0-9a-zA-Z\\+\\=]){4}\\s*)+",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueBoolean": {
+                            "type": "boolean",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueCanonical": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueCode": {
+                            "type": "string",
+                            "pattern": "[^\\s]+(\\s[^\\s]+)*",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueDate": {
+                            "type": "string",
+                            "pattern": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1]))?)?",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueDateTime": {
+                            "type": "string",
+                            "pattern": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueDecimal": {
+                            "type": "number",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueId": {
+                            "type": "string",
+                            "pattern": "[A-Za-z0-9\\-\\.]{1,64}",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueInstant": {
+                            "type": "string",
+                            "pattern": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueInteger": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueMarkdown": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueOid": {
+                            "type": "string",
+                            "pattern": "urn:oid:[0-2](\\.(0|[1-9][0-9]*))+",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valuePositiveInt": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueString": {
+                            "type": "string",
+                            "pattern": "[ \\r\\n\\t\\S]+",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueTime": {
+                            "type": "string",
+                            "pattern": "([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueUnsignedInt": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueUri": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueUrl": {
+                            "type": "string",
+                            "pattern": "\\S*",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueUuid": {
+                            "type": "string",
+                            "pattern": "urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueAddress": {
+                            "$ref": "#/definitions/Address",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueAge": {
+                            "$ref": "#/definitions/Age",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueAnnotation": {
+                            "$ref": "#/definitions/Annotation",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueAttachment": {
+                            "$ref": "#/definitions/Attachment",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueCodeableConcept": {
+                            "$ref": "#/definitions/CodeableConcept",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueCoding": {
+                            "$ref": "#/definitions/Coding",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueContactPoint": {
+                            "$ref": "#/definitions/ContactPoint",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueCount": {
+                            "$ref": "#/definitions/Count",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueDistance": {
+                            "$ref": "#/definitions/Distance",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueDuration": {
+                            "$ref": "#/definitions/Duration",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueHumanName": {
+                            "$ref": "#/definitions/HumanName",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueIdentifier": {
+                            "$ref": "#/definitions/Identifier",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueMoney": {
+                            "$ref": "#/definitions/Money",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valuePeriod": {
+                            "$ref": "#/definitions/Period",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueQuantity": {
+                            "$ref": "#/definitions/Quantity",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueRange": {
+                            "$ref": "#/definitions/Range",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueRatio": {
+                            "$ref": "#/definitions/Ratio",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueReference": {
+                            "$ref": "#/definitions/Reference",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueSampledData": {
+                            "$ref": "#/definitions/SampledData",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueSignature": {
+                            "$ref": "#/definitions/Signature",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueTiming": {
+                            "$ref": "#/definitions/Timing",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueContactDetail": {
+                            "$ref": "#/definitions/ContactDetail",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueRelatedArtifact": {
+                            "$ref": "#/definitions/RelatedArtifact",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueUsageContext": {
+                            "$ref": "#/definitions/UsageContext",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        },
+                        "valueMeta": {
+                            "$ref": "#/definitions/Meta",
+                            "description": "Value of extension - must be one of a constrained set of the data types (see [Extensibility](extensibility.html) for a list)."
+                        }
+                    },
+                    "required": [
+                        "url"
+                    ]
+                }
+            ]
+        }
+    }
+}
