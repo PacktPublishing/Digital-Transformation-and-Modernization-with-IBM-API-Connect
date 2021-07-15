@@ -1,0 +1,43 @@
+policy: 1.0.0
+info:
+  title: Redact and Log
+  name: redactlog
+  version: 2.0.0
+  description: Redact sensitive CC and custom  data and log
+  contact: 
+    name: Jim Brennan
+    url: https://github.com/apic
+    email: jim.brennan@apichealth.com
+attach:
+  - rest
+  - soap
+gateways:
+  - datapower-api-gateway
+properties:
+  $schema: 'http://json-schema.org/draft-04/schema#'
+  type: object
+  properties:
+    env:
+      label: Environment
+      description: Runtime Environment
+      type: string
+  required:
+    - env
+assembly:
+    execute:
+      - log:
+          version: 2.0.0
+          title: log-gather
+          mode: gather-only
+      - redact:
+          version: 2.0.0
+          title: redact
+          redactions:
+            - action: redact
+              path: $$.**.CCNum
+          root: log.request_body
+      - gatewayscript:
+          version: 2.0.0
+          title: gatewayscript-CommonLogging
+          source: |-
+             <add your gateway script source here>
