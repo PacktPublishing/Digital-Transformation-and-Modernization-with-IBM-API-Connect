@@ -1,6 +1,6 @@
 # Digital Transformation and Modernization with IBM API Connect 
 
-<a href="https://www.packtpub.com/product/digital-transformation-and-modernization-with-ibm-api-connect/9781801070799?utm_source=github&utm_medium=repository&utm_campaign="><img src="" alt="Digital Transformation and Modernization with IBM API Connect " height="256px" align="right"></a>
+<a href="https://www.packtpub.com/product/digital-transformation-and-modernization-with-ibm-api-connect/9781801070799?utm_source=github&utm_medium=repository&utm_campaign="><img src="https://static.packt-cdn.com/products/9781801070799/cover/smaller" alt="Digital Transformation and Modernization with IBM API Connect " height="256px" align="right"></a>
 
 This is the code repository for [Digital Transformation and Modernization with IBM API Connect ](https://www.packtpub.com/product/digital-transformation-and-modernization-with-ibm-api-connect/9781801070799?utm_source=github&utm_medium=repository&utm_campaign=), published by Packt.
 
